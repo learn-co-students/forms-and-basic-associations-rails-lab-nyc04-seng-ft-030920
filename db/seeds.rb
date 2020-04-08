@@ -1,12 +1,8 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
 # ID3 tag music genres are surprisingly specific.
+
+Artist.destroy_all
+Song.destroy_all
+Note.destroy_all
 
 genres = Hash[[
   "Blues",
@@ -159,4 +155,32 @@ genres = Hash[[
   "Synthpop"
 ].map { |genre| [genre, Genre.find_or_create_by(name: genre)] }]
 
+fka_twigs = Artist.create(name: "FKA Twigs")
+blood_orange = Artist.create(name: "Blood Orange")
+daft_punk = Artist.create(name: 'Daft Punk')
 
+water_me = fka_twigs.songs.create(title: "Water Me")
+cellophane = fka_twigs.songs.create(title: "cellophane")
+
+charcoal_baby = blood_orange.songs.create(title: "Charcoal Baby")
+hope = blood_orange.songs.create(title: "Hope")
+
+opera = Genre.find_by(name: "Opera")
+water_me.genre_id = opera.id
+water_me.save
+
+pop = Genre.find_by(name: "Pop")
+cellophane.genre_id = pop.id
+cellophane.save
+
+hip_hop = Genre.find_by(name: "Hip-Hop")
+charcoal_baby.genre_id = hip_hop.id
+charcoal_baby.save
+
+rb = Genre.find_by(name: "R&B")
+hope.genre_id = rb.id
+hope.save
+
+water_me.notes.create(content: "This song makes me cry.")
+cellophane.notes.create(content: "This song is also really sad.")
+charcoal_baby.notes.create(content: "This is my favorite Blood Orang song.")
